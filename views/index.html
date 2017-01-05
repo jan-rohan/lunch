@@ -1,0 +1,79 @@
+<html>
+
+<head>
+    <script src="/vue/dist/vue.min.js"></script>
+    <script src="/jquery/dist/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        
+        <h1>Honza Oběd Time</h1>
+
+        <div>
+
+            <div v-for="restaurant in restaurants">
+                <h3>{{ restaurant.name }}</h3>
+
+                <table v-if="restaurant.type == 'table'" >
+                    <tr v-for="item in restaurant.items">
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.price }}</td>
+                    </tr>
+                </table>
+
+                <div v-if="restaurant.type == 'image'" >
+                    <img src="http://www.w3schools.com/css/img_trans.gif" v-bind:style="{ 'background': 'url(' + restaurant.imagePriceList+ ') ' + hrbekSize.left + 'px ' + hrbekSize.top + 'px', width: '' + hrbekSize.width + 'px', height: '' + hrbekSize.height + 'px' } ">
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+</body>
+
+<script type="text/javascript">
+    
+    var app = new Vue({
+        el: '#app',
+        data: {
+            restaurants: []
+        }, 
+        computed: {
+            hrbekDay() {
+                return new Date().getDay() - 1;
+                //return 10;
+            },
+            hrbekSize() {
+                if (this.hrbekDay > 4) {
+                    return {
+                        top: 0,
+                        left: 0,
+                        width: 826,
+                        height: 600
+                    }
+                } else {
+                    return {
+                        top: -(135 + 72 * this.hrbekDay),
+                        left: 0,
+                        width: 826,
+                        height: 74
+                    }
+                }
+            }
+        }
+    });
+
+ 
+    
+    
+
+    $.get( "/api/v1/list", function( data ) {
+        app.restaurants = data;
+    }, 'json');
+
+</script>
+
+</html>
