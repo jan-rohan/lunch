@@ -25,7 +25,6 @@ module.exports = class Tradice extends Restaurant {
                 }
             });
 
-
             console.log("Tradice finished.");
             resolve();
         });

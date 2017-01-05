@@ -4,7 +4,7 @@ let Restaurant = require('../restaurant.js');
 module.exports = class Formanka extends Restaurant {
 
     constructor() {
-        super('Formanka', 'http://www.zomato.com/cs/widgets/daily_menu?entity_id=16506447');
+        super('Formanka', 'http://www.smichovskaformanka.cz/1-denni-menu');
     }
 
     parseInner(resolve, reject) {
@@ -13,21 +13,31 @@ module.exports = class Formanka extends Restaurant {
         this.loadHtml((error, body, $) => {
 
             let today = moment().format(', DD ');
+            let counter = 0;
+            let enable = false;
+            $('.bigbox .static .text p').each((i, elem) => {
 
-            $('.date').each( function (i, elem) {
-                if ( $(this).text().search(today) == -1 ) {
-                    return
+                let text = $(elem).text().trim();
+                let html = $(elem).html().trim();
+
+                if (html.startsWith('<strong>')) {
+                    enable = true;
+                    counter++;
+                    if (counter == 1)
+                        return;
                 }
-                $(elem).nextUntil('.date, .divider', '.item').each(function (i, elem) {
-                    
-                        let name = $(this).find('.item-name').text().trim()
-                        let desc = $(this).find('.item-description').text().trim()
-                        let price = $(this).find('.item-price').text().trim()
 
-                        if (name && price) {
-                            self.addItem(name, price);
-                        }
-                });
+                if (counter > 3 || text.toLowerCase().startsWith('hlavní jídla')) {
+                    return;
+                }
+
+                let line = text.replace(/\s\s+/g, ' ');
+                let lastSpaceIndex = line.lastIndexOf(' ');
+                let name = line.substring(0, lastSpaceIndex);
+                let price = line.substring(lastSpaceIndex);
+                if (text.length > 5) {
+                    this.addItem(name, price);
+                }
             });
 
             console.log("Formanka finished.");

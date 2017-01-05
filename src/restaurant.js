@@ -16,17 +16,16 @@ module.exports = class Restaurant {
     loadHtml(callback) {
 
         request({
-            url: this.url,
+            uri: this.url,
+            method: 'GET',
             encoding: 'binary',
             headers: {
-                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36',
-                'accept-language': 'cs,en;q=0.8,en-US;q=0.6,sk;q=0.4',
-                'accept': '	text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-                'origin': ''
+                'User-Agent': 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)',
+                'Accept-Language': 'cs,en;q=0.8,en-US;q=0.6,sk;q=0.4',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'Origin': ''
             },
         }, (error, response, body) => {
-
-            console.log(error);
 
             let buf = Buffer.from(body, 'ascii');
             body = buf.toString('utf8');
