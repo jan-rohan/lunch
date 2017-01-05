@@ -3,44 +3,86 @@
 <head>
     <script src="/vue/dist/vue.min.js"></script>
     <script src="/jquery/dist/jquery.min.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+    <link href="/styles/sticky-footer.css" rel="stylesheet">
 </head>
 
 <body>
-    <div id="app">
-        
-        <h1>Honza Oběd Time</h1>
+    <!-- Begin page content -->
+    <div class="container" id="app">
+        <div class="page-header">
+            <h1>Honza Oběd Time</h1>
+        </div>
+
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="filter" class="col-sm-2 control-label">Filtr restaurací</label>
+                <div class="col-sm-10">
+                    <input v-model="nameFilter" type="text" class="form-control" id="filter" placeholder="Název restaurace" autofocus>
+                </div>
+            </div>
+        </form>
 
         <div>
-
             <div v-for="restaurant in restaurants">
-                <h3>{{ restaurant.name }}</h3>
+                <h2>{{ restaurant.name }}</h2>
 
-                <table v-if="restaurant.type == 'table'" >
+                <table v-if="restaurant.type == 'table'" class="table table-striped table-hover table-bordered" >
+                    <thead>
+                        <tr>
+                            <th>Jídlo</th>
+                            <th>Cena</th>
+                        </tr>
+                    </thead>
                     <tr v-for="item in restaurant.items">
                         <td>{{ item.name }}</td>
-                        <td>{{ item.price }}</td>
+                        <td class="price">{{ item.price }}</td>
                     </tr>
                 </table>
 
                 <div v-if="restaurant.type == 'image'" >
                     <img src="http://www.w3schools.com/css/img_trans.gif" v-bind:style="{ 'background': 'url(' + restaurant.imagePriceList+ ') ' + hrbekSize.left + 'px ' + hrbekSize.top + 'px', width: '' + hrbekSize.width + 'px', height: '' + hrbekSize.height + 'px' } ">
+                    <p class="lead">Oběd: 69 Kč Menu: 73 Kč</p>
+                </div>
+
+                <div  v-if="restaurant.type == null">
+                    <p class="lead">Nyní nejsou data k dispozici.</p>
                 </div>
 
             </div>
 
         </div>
-
-
     </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="text-muted">Kam pudeme na oběd?</p>
+        </div>
+    </footer>
+
 </body>
 
 <script type="text/javascript">
     
-    var app = new Vue({
+    let allRestaurants = [];
+
+    let app = new Vue({
         el: '#app',
         data: {
-            restaurants: []
+            restaurants: [],
+            nameFilter: ""
         }, 
+        watch: {
+            nameFilter() {
+                this.restaurants = allRestaurants.filter(r => {
+                    return r.name.toUpperCase().startsWith(this.nameFilter.toUpperCase());
+                });
+            }
+        },
         computed: {
             hrbekDay() {
                 return new Date().getDay() - 1;
@@ -71,7 +113,8 @@
     
 
     $.get( "/api/v1/list", function( data ) {
-        app.restaurants = data;
+        allRestaurants = data;
+        app.restaurants = allRestaurants;
     }, 'json');
 
 </script>

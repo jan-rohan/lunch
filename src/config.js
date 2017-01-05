@@ -11,4 +11,16 @@ let restaurants = [
     new Bernard()
 ];
 
+/*
+restaurants.sort((r1, r2) => {
+    if (r1.name > r2.name) {
+        return 1;
+    } else if (r2.name > r1.name) {
+        return -1;
+    }
+
+    return 0;
+});
+*/
+
 module.exports.restaurants = restaurants;
