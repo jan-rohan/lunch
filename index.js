@@ -6,7 +6,7 @@ let Restaurant = require('./src/restaurant');
 let config = require('./src/config.js');
 
 let app = express();
-let port = 8080;
+let port = process.env.PORT || 8080;
 
 nunjucks.configure('views', {
     autoescape: true,
