@@ -29,6 +29,7 @@ module.exports = class Restaurant {
 
             let buf = Buffer.from(body, 'ascii');
             body = buf.toString('utf8');
+
             if (!error) {
                 let $ = cheerio.load(body);
                 callback(error, body, $);

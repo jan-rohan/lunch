@@ -34,3 +34,8 @@ body {
 form {
     border-bottom: 1px solid #eee;
 }
+
+.price {
+  width: 100px; 
+  text-align: right;
+}

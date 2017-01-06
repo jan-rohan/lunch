@@ -37,6 +37,7 @@ app.get('/api/v1/list', (req, res) => {
 });
 
 app.get('/', (req, res) => {
+    console.log("--- GET");
     res.render('index.html', { username: "Honzo" });
 });
 

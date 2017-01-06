@@ -3,12 +3,14 @@ let Hrbek = require('./restaurants/hrbek');
 let Bernard = require('./restaurants/bernard');
 let Formanka = require('./restaurants/formanka');
 let Tradice = require('./restaurants/tradice');
+let Nostro = require('./restaurants/nostro');
 
 let restaurants = [
     new Hrbek(),
     new Formanka(),
     new Tradice(),
-    new Bernard()
+    new Bernard(),
+    new Nostro()
 ];
 
 /*

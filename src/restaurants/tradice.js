@@ -9,18 +9,15 @@ module.exports = class Tradice extends Restaurant {
 
     parseInner(resolve, reject) {
 
-        let self = this;
         this.loadHtml((error, body, $) => {
 
-            let n;
-            n = (new Date()).getDay();
-            $('.separator-section').each(function(i, elem) {
+            let n = new Date().getDay();
+            $('.separator-section').each((i, elem) => {
                 if (i + 1 === n) {
-                    return $(this).find('.item').each(function(i, elem) {
-                        var name, price;
-                        name = $(this).find('div').first().text().trim();
-                        price = $(this).find('div').last().text().trim();
-                        self.addItem(name, price);
+                    return $(elem).find('.item').each((i, elem) => {
+                        let name = $(elem).find('div').first().text().trim();
+                        let price = $(elem).find('div').last().text().trim().replace(',-', ' Kč');
+                        this.addItem(name, price);
                     });
                 }
             });
