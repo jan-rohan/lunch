@@ -15,6 +15,8 @@ module.exports = class Formanka extends Restaurant {
             let today = moment().format(', DD ');
             let counter = 0;
             let enable = false;
+            let finish = false;
+            let exit = false;
 
             let days = [
                 'pondělí',
@@ -31,6 +33,10 @@ module.exports = class Formanka extends Restaurant {
             }
 
             $('.bigbox .static .text p').each((i, elem) => {
+
+                if (exit) {
+                    return;
+                }
 
                 let text = $(elem).text().trim();
                 let ltext = text.toLowerCase();
@@ -51,11 +57,17 @@ module.exports = class Formanka extends Restaurant {
                     return;
                 }
 
+                if (finish && html.startsWith('<strong>') ) {
+                    exit = true;
+                    return;
+                }
+
                 let line = text.replace(/\s\s+/g, ' ');
                 let lastSpaceIndex = line.lastIndexOf(' ');
                 let name = line.substring(0, lastSpaceIndex);
                 let price = line.substring(lastSpaceIndex).replace('K', ' K');
                 if (text.length > 5) {
+                    finish = true;
                     this.addItem(name, price);
                 }
             });
