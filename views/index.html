@@ -47,8 +47,7 @@
                 </table>
 
                 <div v-if="restaurant.type == 'image'" >
-                    <img src="http://www.w3schools.com/css/img_trans.gif" v-bind:style="{ 'background': 'url(' + restaurant.imagePriceList+ ') ' + hrbekSize.left + 'px ' + hrbekSize.top + 'px', width: '' + hrbekSize.width + 'px', height: '' + hrbekSize.height + 'px' } ">
-                    <p class="lead">Oběd: 69 Kč Menu: 73 Kč</p>
+                    <img v-bind:src="restaurant.imagePriceList">
                 </div>
 
                 <div  v-if="restaurant.type == null">
@@ -83,29 +82,6 @@
                 this.restaurants = allRestaurants.filter(r => {
                     return r.name.toUpperCase().startsWith(this.nameFilter.toUpperCase());
                 });
-            }
-        },
-        computed: {
-            hrbekDay() {
-                return new Date().getDay() - 1;
-                //return 10;
-            },
-            hrbekSize() {
-                if (this.hrbekDay > 4) {
-                    return {
-                        top: 0,
-                        left: 0,
-                        width: 826,
-                        height: 600
-                    }
-                } else {
-                    return {
-                        top: -(135 + 72 * this.hrbekDay),
-                        left: 0,
-                        width: 826,
-                        height: 74
-                    }
-                }
             }
         }
     });
