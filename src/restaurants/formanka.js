@@ -57,6 +57,12 @@ module.exports = class Formanka extends Restaurant {
                     return;
                 }
 
+                if (day < 5 && ltext.startsWith(days[day + 1])) {
+                    exit = true;
+                    return;
+                }
+
+
                 if (finish && html.startsWith('<strong>') ) {
                     exit = true;
                     return;
@@ -66,7 +72,7 @@ module.exports = class Formanka extends Restaurant {
                 let lastSpaceIndex = line.lastIndexOf(' ');
                 let name = line.substring(0, lastSpaceIndex);
                 let price = line.substring(lastSpaceIndex).replace('K', ' K');
-                if (text.length > 5) {
+                if (text.length > 10) {
                     finish = true;
                     this.addItem(name, price);
                 }
