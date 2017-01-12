@@ -1,4 +1,5 @@
-let Restaurant = require('../restaurant.js');
+const Restaurant = require('../restaurant.js');
+const getPixels = require("get-pixels")
 
 module.exports = class Hrbek extends Restaurant {
 
@@ -9,11 +10,24 @@ module.exports = class Hrbek extends Restaurant {
     parseInner(resolve, reject) {
 
         super.loadHtml((error, body, $) => {
-            
-            this.setImagePriceList( $('img').first().attr('src') );
 
-            console.log("Hrbek finished.");
-            resolve();
+            let imgSrc = $('img').first().attr('src');
+            
+            this.setImagePriceList( imgSrc );
+
+            console.log("hrbek start -----")
+            getPixels(imgSrc, function(err, pixels) {
+                if(err) {
+                    console.log("Bad image path")
+                    return
+                }
+                console.log("got pixels", pixels.shape.slice())
+                console.log("Hrbek finished.");
+                resolve();
+            })
+
+
+            
         });
     }
 

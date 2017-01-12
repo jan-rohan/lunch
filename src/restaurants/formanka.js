@@ -42,39 +42,38 @@ module.exports = class Formanka extends Restaurant {
                 let ltext = text.toLowerCase();
                 let html = $(elem).html().trim();
 
-                if (html.startsWith('<strong>') && ltext.startsWith(days[day]) ) {
+                if (ltext.startsWith(days[day]) ) {
                     enable = true;
                     counter++;
                     if (counter == 1)
                         return;
                 }
 
-                if (!enable) {
-                    return;
-                }
+                if (enable) {
 
-                if (counter > 3 || text.toLowerCase().startsWith('hlavní jídla')) {
-                    return;
-                }
+                    if (text.toLowerCase().startsWith('hlavní jídla')) {
+                        return;
+                    }
 
-                if (day < 5 && ltext.startsWith(days[day + 1])) {
-                    exit = true;
-                    return;
-                }
+                    if (day < 5 && ltext.startsWith(days[day + 1])) {
+                        exit = true;
+                        return;
+                    }
 
 
-                if (finish && html.startsWith('<strong>') ) {
-                    exit = true;
-                    return;
-                }
+                    if (finish && html.startsWith('<strong>') ) {
+                        exit = true;
+                        return;
+                    }
 
-                let line = text.replace(/\s\s+/g, ' ');
-                let lastSpaceIndex = line.lastIndexOf(' ');
-                let name = line.substring(0, lastSpaceIndex);
-                let price = line.substring(lastSpaceIndex).replace('K', ' K');
-                if (text.length > 10) {
-                    finish = true;
-                    this.addItem(name, price);
+                    let line = text.replace(/\s\s+/g, ' ');
+                    let lastSpaceIndex = line.lastIndexOf(' ');
+                    let name = line.substring(0, lastSpaceIndex);
+                    let price = line.substring(lastSpaceIndex).replace('K', ' K');
+                    if (text.length > 10) {
+                        finish = true;
+                        this.addItem(name, price);
+                    }
                 }
             });
 
