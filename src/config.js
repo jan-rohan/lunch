@@ -11,8 +11,8 @@ let restaurants = [
     new Formanka(),
     new Tradice(),
     new Bernard(),
-    new Nostro(),
-    new Volynka()
+    new Nostro()
+    //new Volynka()
 ];
 
 /*
