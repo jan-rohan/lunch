@@ -1,5 +1,4 @@
 const Restaurant = require('../restaurant.js');
-const getPixels = require("get-pixels")
 
 module.exports = class Hrbek extends Restaurant {
 
@@ -12,22 +11,11 @@ module.exports = class Hrbek extends Restaurant {
         super.loadHtml((error, body, $) => {
 
             let imgSrc = $('img').first().attr('src');
-            
-            this.setImagePriceList( imgSrc );
 
-            console.log("hrbek start -----")
-            getPixels(imgSrc, function(err, pixels) {
-                if(err) {
-                    console.log("Bad image path")
-                    return
-                }
-                console.log("got pixels", pixels.shape.slice())
-                console.log("Hrbek finished.");
-                resolve();
-            })
+            this.setImagePriceList(imgSrc);
 
-
-            
+            console.log("Hrbek finished.");
+            resolve();
         });
     }
 

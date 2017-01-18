@@ -1,18 +1,19 @@
 //let Restaurant = require('./restaurant');
-let Hrbek = require('./restaurants/hrbek');
-let Bernard = require('./restaurants/bernard');
-let Formanka = require('./restaurants/formanka');
-let Tradice = require('./restaurants/tradice');
-let Nostro = require('./restaurants/nostro');
-let Volynka = require('./restaurants/volynka');
+const Hrbek = require('./restaurants/hrbek');
+const Bernard = require('./restaurants/bernard');
+const Formanka = require('./restaurants/formanka');
+const Tradice = require('./restaurants/tradice');
+const Nostro = require('./restaurants/nostro');
+const Volynka = require('./restaurants/volynka');
+const Bife = require('./restaurants/bife');
 
 let restaurants = [
     new Hrbek(),
     new Formanka(),
     new Tradice(),
-    new Bernard(),
-    new Nostro()
-    //new Volynka()
+    new Bife(),
+    new Nostro(),
+    new Bernard()
 ];
 
 /*
